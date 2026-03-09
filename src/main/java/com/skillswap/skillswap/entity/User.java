@@ -2,6 +2,11 @@ package com.skillswap.skillswap.entity;
 
 import java.time.LocalDateTime;
 
+import java.util.HashSet;
+import java.util.Set;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +34,14 @@ public class User {
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
+
+	@ManyToMany
+	@JoinTable(name = "user_skills_offered", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
+	private Set<Skill> offeredSkills = new HashSet<>();
+
+	@ManyToMany
+	@JoinTable(name = "user_skills_wanted", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
+	private Set<Skill> wantedSkills = new HashSet<>();
 
 	public User() {
 		super();
